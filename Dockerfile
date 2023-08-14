@@ -1,9 +1,8 @@
 FROM ubuntu:latest
-LABEL org="iNeuron Intelligence Private Limited"
-LABEL author="avnish"
-LABEL email="avnish@ineuron.ai"
-LABEL twitter="https://twitter.com/avn_yadav"
-LABEL linkedin="https://www.linkedin.com/in/avnish-yadav-3ab447188/"
+LABEL org="iNeuron Private Limited"
+LABEL author="Udit Naik"
+LABEL email="uditnaik7@gmail.com"
+LABEL linkedin="https://www.linkedin.com/in/uditnaik7/"
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV HDFS_NAMENODE_USER=root
