@@ -50,10 +50,39 @@ RUN ssh-keygen -t rsa -P "" -f /root/.ssh/id_rsa \
 COPY ubuntu/root/.ssh/config /root/.ssh/config
 
 # setup hadoop
-RUN wget -q https://archive.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz -O /tmp/hadoop-3.2.1.tar.gz \
+#RUN wget -q https://archive.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz -O /tmp/hadoop-3.2.1.tar.gz \
 #RUN wget -q http://apache.mirrors.tds.net/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz -O /tmp/hadoop-3.2.1.tar.gz \
-    && tar -xzf /tmp/hadoop-3.2.1.tar.gz -C /usr/local/ \
-    && ln -s /usr/local/hadoop-3.2.1 /usr/local/hadoop \
+#    && tar -xzf /tmp/hadoop-3.2.1.tar.gz -C /usr/local/ \
+#    && ln -s /usr/local/hadoop-3.2.1 /usr/local/hadoop \
+#    && rm -fr /usr/local/hadoop/etc/hadoop/* \
+#    && mkdir /usr/local/hadoop/extras \
+#    && mkdir /var/hadoop \
+#	&& mkdir /var/hadoop/hadoop-datanode \
+#	&& mkdir /var/hadoop/hadoop-namenode \
+#	&& mkdir /var/hadoop/mr-history \
+#	&& mkdir /var/hadoop/mr-history/done \
+#	&& mkdir /var/hadoop/mr-history/tmp
+#COPY ubuntu/usr/local/hadoop/etc/hadoop/* /usr/local/hadoop/etc/hadoop/
+#COPY ubuntu/usr/local/hadoop/extras/* /usr/local/hadoop/extras/
+#RUN $HADOOP_HOME/bin/hdfs namenode -format oneoffcoder
+
+# setup spark new below
+#RUN wget -q https://dlcdn.apache.org/spark/spark-3.2.4/spark-3.2.4-bin-hadoop2.7.tgz -O /tmp/spark-3.2.4-bin-hadoop2.7.tgz  \
+#     && tar -xzf /tmp/spark-3.2.4-bin-hadoop2.7.tgz -C /usr/local/ \
+#     && ln -s /usr/local/spark-3.2.1-bin-hadoop2.7 /usr/local/spark \
+     #&& rm /usr/local/spark/conf/*.template
+#RUN wget -q https://dlcdn.apache.org/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2.tgz -O /tmp/spark-3.2.1-bin-hadoop3.2.tgz \
+#     && tar -xzf /tmp/spark-3.2.1-bin-hadoop3.2.tgz -C /usr/local/ \
+#     && ln -s /usr/local/spark-3.2.1-bin-hadoop3.2 /usr/local/spark \
+#     && rm /usr/local/spark/conf/*.template
+# RUN wget -q https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz -O /tmp/spark-2.4.4-bin-hadoop2.7.tgz \
+#     && tar -xzf /tmp/spark-2.4.4-bin-hadoop2.7.tgz -C /usr/local/ \
+#     && ln -s /usr/local/spark-2.4.4-bin-hadoop2.7 /usr/local/spark \
+#     && rm /usr/local/spark/conf/*.template
+#COPY ubuntu/usr/local/spark/conf/* /usr/local/spark/conf/
+RUN wget -q https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz -O /tmp/hadoop-3.2.4.tar.gz \
+    && tar -xzf /tmp/hadoop-3.2.4.tar.gz -C /usr/local/ \
+    && ln -s /usr/local/hadoop-3.2.4 /usr/local/hadoop \
     && rm -fr /usr/local/hadoop/etc/hadoop/* \
     && mkdir /usr/local/hadoop/extras \
     && mkdir /var/hadoop \
@@ -66,18 +95,12 @@ COPY ubuntu/usr/local/hadoop/etc/hadoop/* /usr/local/hadoop/etc/hadoop/
 COPY ubuntu/usr/local/hadoop/extras/* /usr/local/hadoop/extras/
 RUN $HADOOP_HOME/bin/hdfs namenode -format oneoffcoder
 
-# setup spark
-RUN wget -q https://dlcdn.apache.org/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2.tgz -O /tmp/spark-3.2.1-bin-hadoop3.2.tgz \
-     && tar -xzf /tmp/spark-3.2.1-bin-hadoop3.2.tgz -C /usr/local/ \
-     && ln -s /usr/local/spark-3.2.1-bin-hadoop3.2 /usr/local/spark \
+RUN wget -q https://dlcdn.apache.org/spark/spark-3.2.4/spark-3.2.4-bin-hadoop2.7.tgz -O /tmp/spark-3.2.4-bin-hadoop2.7.tgz  \
+     && tar -xzf /tmp/spark-3.2.4-bin-hadoop2.7.tgz -C /usr/local/ \
+     && ln -s /usr/local/spark-3.2.4-bin-hadoop2.7 /usr/local/spark \
      && rm /usr/local/spark/conf/*.template
-
-# RUN wget -q https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz -O /tmp/spark-2.4.4-bin-hadoop2.7.tgz \
-#     && tar -xzf /tmp/spark-2.4.4-bin-hadoop2.7.tgz -C /usr/local/ \
-#     && ln -s /usr/local/spark-2.4.4-bin-hadoop2.7 /usr/local/spark \
-#     && rm /usr/local/spark/conf/*.template
 COPY ubuntu/usr/local/spark/conf/* /usr/local/spark/conf/
-
+    
 # setup conda
 COPY ubuntu/root/.jupyter /root/.jupyter/
 COPY ubuntu/root/ipynb/environment.yml /tmp/environment.yml
